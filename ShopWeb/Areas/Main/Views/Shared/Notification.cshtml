@@ -1,0 +1,32 @@
+﻿@if (TempData["ChangePasswordSuccessNotification"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script type="text/javascript">
+                                $(function(){
+                    Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: '@TempData["ChangePasswordSuccessNotification"]',
+          showConfirmButton: false,
+          timer: 1500
+        })
+                                });
+    </script>
+}
+@if (TempData["SubmitComment"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script type="text/javascript">
+                                $(function(){
+                    Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: '@TempData["SubmitComment"]',
+          showConfirmButton: false,
+          timer: 1500
+        })
+                                });
+    </script>
+}

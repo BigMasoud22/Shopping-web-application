@@ -1,0 +1,138 @@
+﻿@model Models.ViewModels.UpsertProductVM
+@{
+    ViewData["Title"] = "UpsertProduct";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<html>
+<style>
+    /*  body {
+            background-image: url("/Screenshot 2023-03-01 163232.png");
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }*/
+
+    form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        /*box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);*/
+        max-width: 800px;
+        margin: 0 auto;
+        margin-top: 50px;
+    }
+
+    h1 {
+        text-align: center;
+        font-weight: bold;
+        font-size: 36px;
+        margin-bottom: 40px;
+    }
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 10px;
+        font-size: larger;
+    }
+
+    input[type="text"],
+    textarea,
+    input[type="file"],
+    input[type="number"] {
+        border-radius: 5px;
+        font-size: 20px;
+        padding: 5px;
+        border: 1px solid #757575;
+        width: 100%;
+    }
+
+    input[type="file"] {
+        cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #0069d9;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+</style>
+</html>
+
+<body>
+    <form method="post" enctype="multipart/form-data">
+        <h1>@(Model.Id!=0?"ویرایش":"ایجاد") محصول</h1>
+
+        <hr style="border:solid; color:black;" />
+        <div class="form-group">
+            <label asp-for="Name">نام محصول</label>
+            <input asp-for="Name" type="text" placeholder="نام محصول">
+            <span asp-validation-for=Name class=text-danger></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ShortDescription">توضیحات مختصر محصول</label>
+            <textarea style="resize:none;" asp-for="ShortDescription" placeholder="توضیحات مختصر"></textarea>
+            <span asp-validation-for=ShortDescription class=text-danger></span>
+
+        </div> 
+        <div class="form-group">
+            <label asp-for="Desctioption">توضیحات کامل محصول</label>
+            <textarea style="resize:none;" asp-for="Desctioption" placeholder="توضیحات کامل"></textarea>
+            <span asp-validation-for=Desctioption class=text-danger></span>
+
+        </div>
+        <div class="form-group">
+            <label asp-for="Price">قیمت به تومان:</label>
+            <input asp-for="Price" type="number" placeholder="20000">
+            <span asp-validation-for=Price class=text-danger></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="AvailabilityCount">تعداد موجود در انبار</label>
+            <input asp-for="AvailabilityCount" type="number" placeholder="20000">
+            <span asp-validation-for=AvailabilityCount class=text-danger></span>
+        </div>
+        @*<div class="form-group">
+            <label asp-for="AvaliableColor">رنگ های موجود محصول</label>
+            <select asp-for="AvaliableColor" multiple>
+            <option value=",آبی">آبی</option>
+            <option value=",خاکستری">خاکستری</option>
+            <option value=",سیاه">سیاه</option>
+            <option value=",سبز">سبز</option>
+            <option value=",سفید">سفید</option>
+            </select>
+            </div>*@
+        <div class="form-group">
+            <label asp-for="Size">سایز های موجود محصول</label>
+            <select asp-for="Size" multiple>
+                <option value=",بزرگ">بزرگ</option>
+                <option value=",متوسط">متوسط</option>
+                <option value=",کوچک">کوچک</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CategoryId">دسته محصول</label>
+            <select asp-for="CategoryId" asp-items="@ViewBag.CategoryNames">
+                <option disabled>انتخاب دسته</option>
+            </select>
+        </div>
+        <input type="hidden" asp-for="@Model.Id" />
+        <input type="hidden" asp-for="@Model.CategoryId" />
+
+        @*   <input type="hidden" asp-for="@Model.ImageAddress" />*@
+
+        <button style="width:95%;" class="btn btn-lg btn-primary" type="submit">ثبت</button>
+    </form>
+</body>
+@section Scripts{
+<partial name=_ValidationScriptsPartial />
+
+@*	function.checkInputValue(input) {
+    if (input.value > 1000000) {
+    input.value = 1000000; // set the input value to the maximum value
+    }
+    }*@
+}
+

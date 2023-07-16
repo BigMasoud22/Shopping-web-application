@@ -1,0 +1,74 @@
+﻿@model Models.Category
+@{
+    ViewData["Title"] = "UpsertCategory";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<html>
+<style>
+    form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        max-width: 800px;
+        margin: 0 auto;
+        margin-top: 50px;
+    }
+    h1 {
+        text-align: center;
+        font-weight: bold;
+        font-size: 36px;
+        margin-bottom: 40px;
+    }
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 10px;
+        font-size: larger;
+    }
+    input[type="text"],
+    textarea,
+    input[type="file"],
+    input[type="number"] {
+        border-radius: 5px;
+        font-size: 20px;
+        padding: 5px;
+        border: 1px solid #757575;
+        width: 100%;
+    }
+    input[type="file"] {
+        cursor: pointer;
+    }
+    button[type="submit"]:hover {
+        background-color: #0069d9;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+</style>
+</html>
+
+<body>
+    <form method="post" enctype="multipart/form-data">
+        <h1>@(Model.id!=0?"ویرایش":"ایجاد") دسته</h1>
+
+        <hr style="border:solid; color:black;" />
+        <div class="form-group">
+            <label asp-for="Name">نام دسته</label>
+            <input asp-for="Name" type="text" placeholder="نام دسته">
+            <span asp-validation-for=Name class=text-danger></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description">توضیحات دسته</label>
+            <textarea style="resize:none;" asp-for="Description" placeholder="توضیحات"></textarea>
+            <span asp-validation-for=Description class=text-danger></span>
+
+        <input type="hidden" asp-for="id" />
+
+        <button style="width:95%;" class="btn btn-lg btn-primary" type="submit">ثبت</button>
+    </form>
+</body>
+@section Scripts{
+<partial name=_ValidationScriptsPartial />
+}
+
+

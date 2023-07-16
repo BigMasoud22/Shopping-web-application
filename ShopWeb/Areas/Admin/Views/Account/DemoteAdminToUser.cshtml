@@ -1,0 +1,26 @@
+﻿@model Models.ViewModels.UserToAdminVM
+@{
+    ViewData["Title"] = "DemoteAdminToUser";
+    Layout = "~/Areas/Main/Views/Shared/_Layout.cshtml";
+}
+<partial name="Notification" />
+<div id="SuperAdminLoginForm" role="tabpanel">
+    <form method="post" class="account-form-box">
+        <h6>مشخصات کاربر مورد نظر را وارد نمایید.</h6>
+        <div class="input-group">
+            <input asp-for=@Model.Username; type="text" class="form-control" id="Username" placeholder="نام کاربری" aria-label="Username">
+            <span asp-validation-for="@Model.Username" class="text-danger"></span>
+        </div>
+        <div style="padding-top:10px;" class="form-group">
+            <input asp-for=@Model.Email type="email" class="form-control" id="Email" aria-describedby="emailHelp" placeholder="ایمیل خود را وارد کنید">
+            <span asp-validation-for="@Model.Email" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn--full" style="background-color:black;color:white; margin-top:10px;">ثبت نام</button>
+    </form>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+    }
+
+

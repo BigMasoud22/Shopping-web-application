@@ -1,0 +1,111 @@
+﻿@model List<Models.Product>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Main/Views/Shared/_Layout.cshtml";
+}
+
+
+<div id="main-wrapper">
+    <div class="site-wrapper-reveal pt-5">
+
+        <!-- About us Area Start -->
+        <div class="about-us-home-area overflow-hidden">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="about-us-min-content ">
+                            <div class="container-fluid ps-0 pe-0">
+                                <div class="row gx-0 align-items-center bg-gray">
+                                    <div class="col-lg-7">
+                                        <div class="about-us-content-4 ">
+                                            <h5 class="mb-30">درباره ما</h5>
+                                            <p class="pb-lg-5">
+                                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
+                                                چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و
+                                                مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد
+                                                نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای
+                                                زیادی در شصت و سه درصد گذشته حال و آینده شناخت فراوان جامعه و
+                                                متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان
+                                                رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد
+                                                کرد.
+                                            </p>
+                                            <div class="button-box section-space--mt_60">
+                                                <a href="#" class="btn--text-icon">
+                                                    مطالعه بیشتر <i class="arrow_carrot-2right"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <div class="elendo-video-box">
+                                            <!-- <img src="assets/images/banners/video-banner.webp" class="img-fluid" alt="Video bg images"> -->
+                                            <div class="video-icon">
+                                                <a href="https://www.youtube.com/" class="popup-youtube">
+                                                    <i class="linear-ic-play"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- About us Area End -->
+        <div class="row">
+            @foreach (var product in Model)
+            {
+                @if (product.MainImageAddress != null)
+                {
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <!-- Single Product Item Start -->
+                <div class="single-product-item text-center">
+                            <div class="products-images">
+                                <a asp-area="Main" asp-controller="UserProduct" asp-action="ProductDetail" asp-route-productId="@product.id" class="product-thumbnail">
+                                    <img src="~/@product.MainImageAddress"
+                                 alt="@product.picturesAlternativeText">
+
+                                    @if (!product.IsAvailable)
+                                    {
+                                        <span class="ribbon out-of-stock ">
+                                            اتمام موجودی
+                                        </span>
+                                    }
+                                </a>
+                                <div class="product-actions">
+                                    <a href="@Url.Action("ProductDetail", "UserProduct", new { area = "Main", productId = product.id })">
+                                        <i class="p-icon icon-plus"></i><span class="tool-tip">جزعیات</span>
+                                    </a>
+                                    <form id="Index" method="post">
+                                        <a onclick="document.getElementById('Index').submit()">
+                                            <i class="p-icon icon-bag2"></i> <span class="tool-tip">افزودن به سبد خرید</span>
+                                        </a>
+                                        <input hidden name="productId" value="@product.id">
+                                    </form>
+                                    <a onclick="redirectToAreaAction('Main','Home','')">
+                                        <i class="p-icon icon-heart"></i> <span class="tool-tip">افزودن به علاقه مندی ها</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <h6 class="prodect-title">
+                                    <a href="product-details.html">عنوان محصول</a>
+                                </h6>
+                                <div class="prodect-price">
+                                    <span>@product.Price</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Single Product Item End -->
+                }
+            }
+        </div>
+    </div>
+</div>
+@section Scripts{
+<script src="~/js/scripts.js"></script>
+<partial name="Notification" />
+}

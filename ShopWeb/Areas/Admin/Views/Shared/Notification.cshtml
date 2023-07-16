@@ -1,0 +1,46 @@
+﻿@if (TempData["AddAdminSuccess"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script type="text/javascript">
+                                $(function(){
+                    Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: '@TempData["AddAdminSuccess"]',
+          showConfirmButton: false,
+          timer: 3000
+        })
+                                });
+    </script>
+}
+@if (TempData["AddAdminFaild"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script type="text/javascript">
+                                        $(function(){
+                           Swal.fire({
+          icon: 'error',
+          title: '@TempData["AddAdminFaild"]',
+          showConfirmButton:false,
+          timer:3000
+        })
+                                        });
+    </script>
+}
+@if (TempData["DuplicateAdmin"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script type="text/javascript">
+                       $(function(){
+           Swal.fire({
+          icon: 'error',
+          title: '@TempData["DuplicateAdmin"]',
+          showConfirmButton:false,
+          timer:3000
+        })
+                                        });
+    </script>
+}

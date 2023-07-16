@@ -1,0 +1,413 @@
+﻿@using Models;
+@using Models.ViewModels;
+@model ProductDetailVM
+@{
+    ViewData["Title"] = "ProductDetail";
+    Layout = "~/Areas/Main/Views/Shared/_Layout.cshtml";
+
+}
+<html>
+<style>
+    .image-container {
+        width: 100px;
+        height: 100px;
+        overflow: hidden;
+    }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+
+
+    .mainimage-container {
+        max-width: 100%; /* Ensures the image container doesn't exceed its parent's width */
+        height: auto; /* Allows the container to adjust its height based on the image's aspect ratio */
+        text-align: center; /* Centers the image horizontally */
+    }
+
+        .mainimage-container img {
+            max-width: 100%; /* Ensures the image doesn't exceed its container's width */
+            height: auto; /* Allows the image to adjust its height based on the container's width */
+        }
+
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .comment {
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+
+    input[type="radio"] {
+        width: 1.5em;
+        height: 1.5em;
+        line-height: 1.5em;
+        font-size: 1.5em;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border-radius: 50%;
+        background-color: #9E9E9E;
+    }
+
+
+    #largeCheckbox:after {
+        content: "L";
+    }
+
+    #mediumCheckbox:after {
+        content: "M";
+    }
+
+    #smallCheckbox:after {
+        content: "S";
+    }
+
+    input[type="radio"]:after {
+        display: block;
+        text-align: center;
+    }
+
+    input[type="radio"]:checked {
+        background-color: #616161;
+    }
+</style>
+<partial name="Notification" />
+</html>
+
+
+<body>
+
+    <!-- breadcrumb-area start -->
+    <div class="breadcrumb-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row breadcrumb_box  align-items-center">
+                        <div class="col-lg-6 col-md-6 col-sm-6 text-center text-sm-start">
+                            <h2 class="breadcrumb-title">@Model.product.Name</h2>
+                        </div>
+                        <div class="col-lg-6  col-md-6 col-sm-6">
+                            <!-- breadcrumb-list start -->
+                            <ul class="breadcrumb-list text-center text-sm-end">
+                                <li class="breadcrumb-item"><a asp-area="Main" asp-controller="Home" asp-action="Index">خانه</a></li>
+                                <li class="breadcrumb-item active">@Model.product.Name</li>
+                            </ul>
+                            <!-- breadcrumb-list end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb-area end -->
+
+
+
+
+
+    <div id="main-wrapper">
+        <div class="site-wrapper-reveal">
+
+            <div class="single-product-wrap section-space--pt_90 border-bottom">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12">
+
+                            <!-- Product Details Left -->
+                            <div class="product-details-left">
+                                <div class="product-details-images-2 slider-lg-image-2">
+
+                                    <div>
+                                        <div class="mainimage-container">
+                                            <a href="~/@Model.product.MainImageAddress" class="poppu-img">
+                                                <img src="~/@Model.product.MainImageAddress" class="img-fluid" alt="">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product-details-thumbs-2 slider-thumbs-2">
+                                    @foreach (var image in @Model.product.Images)
+                                    {
+                                        <div class="image-container"><img src="~/@image.imageAddress" alt="@Model.product.picturesAlternativeText"></div>
+                                    }
+                                </div>
+                            </div>
+                            <!-- Product Details Left -->
+
+                        </div>
+                        <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
+                            <div class="product-details-content ">
+                                <h5 class="font-weight--reguler mb-10">@Model.product.Name</h5>
+                                <h3 class="price">@Model.product.Price تومان</h3>
+                                <div class="quickview-peragraph mt-10">
+                                    <p>@Model.product.ShortDescription</p>
+                                </div>
+                                <form method="post" action="ProductDetail">
+                                    <div class="product-size-wrapper mt-20">
+                                        <div class="tab-content d-flex">
+                                            <label class="mr-2">اندازه :</label>
+                                            <div class="tab-pane fade" id="tab_list_l">
+                                                بزرگ
+                                            </div>
+                                            <div class="tab-pane fade" id="tab_list_m">
+                                                متوسط
+                                            </div>
+                                            <div class="tab-pane fade" id="tab_list_s">
+                                                کوچک
+                                            </div>
+                                        </div>
+                                        <ul class="nav product-size-menu" role="tablist">
+                                            <li class="tab__item nav-item active">
+                                                <input type="radio" value="Large" name=size data-bs-toggle="tab" id=largeCheckbox href="#tab_list_l" role="tab"></input>
+                                            </li>
+                                            <li class="tab__item nav-item">
+                                                <input type="radio" value="Medium" selcted name=size data-bs-toggle="tab" id=mediumCheckbox href="#tab_list_m" role="tab"></input>
+                                            </li>
+                                            <li class="tab__item nav-item">
+                                                <input type="radio" value="small" name=size data-bs-toggle="tab" id=smallCheckbox href="#tab_list_s" role="tab"></input>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="quickview-action-wrap mt-30">
+                                        <div class="quickview-cart-box">
+                                            <div class="quickview-quality">
+                                                <div class="cart-plus-minus">
+                                                    <input class="cart-plus-minus-box" asp-for=countCart type="text" name="cartCount">
+                                                </div>
+                                            </div>
+                                            <input hidden name=productVMId value=@Model.product.id />
+                                            <div class="quickview-button">
+                                                <div class="quickview-cart button">
+                                                    @if (User.Identity.IsAuthenticated)
+                                                    {
+                                                        <button type="submit" class="btn--lg btn--black font-weight--reguler text-white">افزودن به سبد خرید</button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a onclick="LoginAlert();" class="btn--lg btn--black font-weight--reguler text-white">افزودن به سبد خرید</a>
+                                                    }
+                                                </div>
+                                </form>
+
+                                <div class="quickview-wishlist button">
+                                    <a title="Add to wishlist" href="#"><i class="icon-heart"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product_meta mt-30">
+                        <div class="sku_wrapper item_meta">
+                            <span class="label"> موجودی: </span>
+                            <span class="sku"> @Model.product.AvailabilityCount</span>
+                        </div>
+                        <div class="posted_in item_meta">
+                            <span class="label">دسته بندی: </span><a href="#relevantProducts">@Model.product.Category.Name</a>
+                        </div>
+                        <div class="tagged_as item_meta">
+                            <span class="label">برچسب ها: </span><a href="#">@Model.product.Category.Name</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+        <div class="row">
+            <div class="col-12">
+                <div class="product-details-tab section-space--pt_90">
+                    <ul role="tablist" class=" nav">
+                        <li class="active" role="presentation">
+                            <a data-bs-toggle="tab" role="tab" href="#description" class="active">شرح</a>
+                        </li>
+                        @*  <li role="presentation">
+                            <a data-bs-toggle="tab" role="tab" href="#sheet">اطلاعات تکمیلی</a>
+                            </li>*@
+                        <li role="presentation">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a data-bs-toggle="tab" role="tab" href="#reviews">برسی</a>
+                            }
+                            else
+                            {
+                                <a onclick="LoginAlert();" data-bs-toggle="tab" role="tab">برسی</a>
+                            }
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+
+            <div class="col-12">
+                <div class="product_details_tab_content tab-content mt-30">
+                    <!-- Start Single Content -->
+                    <div class="product_tab_content tab-pane active" id="description" role="tabpanel">
+                        <div class="product_description_wrap">
+                            <div class="product-details-wrap">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-7 order-md-1 order-2">
+                                        <div class="details mt-30">
+                                            <h5 class="mb-10">جزئیات</h5>
+                                            <p>@Model.product.Description</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5 order-md-2 order-1">
+                                        <div class="images">
+                                            <img src="~/@Model.product.Images[0].imageAddress" class="img-fluid" alt=@Model.product.picturesAlternativeText>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-details-wrap">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-7 order-md-1 order-2">
+                                        <div class="details mt-30">
+                                            <div class="pro_feature">
+                                                <h5 class="title_3 mb-10">امکانات</h5>
+                                                <h3>به زودی...</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5 order-md-2 order-1">
+                                        <div class="images">
+                                            <img src="~/@Model.product.Images[1].imageAddress" class="img-fluid" alt=@Model.product.picturesAlternativeText>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Start Single Content -->
+                    <div class="product_tab_content tab-pane" id="reviews" role="tabpanel">
+                        <div class="comments-area comments-reply-area">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <form method="post" action="AddComments" class="comment-form-area">
+                                        <p class="comment-form-comment">
+                                            <label>نظر شما *</label>
+                                            <textarea asp-for=comments.Body class="comment-notes" required="required"></textarea>
+                                            <span asp-validation-for="comments.Body"></span>
+                                        </p>
+                                        <div class="comment-form-submit">
+                                            <input type="submit" value="ارسال" class="comment-submit">
+                                        </div>
+                                        <input hidden value=@Model.product.id name="productId" />
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Start RAting Area -->
+                        <div class="container">
+                            <div class="rating_wrap mb-30">
+                                @if (Model.product.productComments == null)
+                                {
+                                    <h4 class="rating-title-2">اولین نفری باشید که برای "عنوان محصول" دیدگاهی ارسال می کنید</h4>
+                                }
+                            </div>
+                            @{
+                                int Index = 0;
+                            }
+                            @foreach (var comment in Model.productCommnets)
+                            {
+                                //میخوام فقط 4 تا از کامنت ها نشون داده بشه
+                                if (Index == 4)
+                                {
+                                    break;
+                                }
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">نام نویسنده:<strong>@comment.User.FullName</strong></h5>
+                                        <p class="card-text">@comment.Body</p>
+                                    </div>
+                                </div>
+                                Index++;
+                            }
+                        </div>
+                    </div>
+                </div>
+                <!-- End RAting Area -->
+                <!-- End Single Content -->
+
+
+
+                <div class="related-products section-space--ptb_90">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="section-title text-center mb-30">
+                                <h4>محصولات مرتبط</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="#relevantProducts" class="product-slider-active">
+                        @foreach (var product in Model.relatedProducts)
+                        {
+                            @if (product.MainImageAddress != null)
+                            {
+                                <div class="col-lg-12">
+                                    <!-- Single Product Item Start -->
+                            <div class="single-product-item text-center">
+                                        <div class="products-images">
+                                            <a href="product-details.html" class="product-thumbnail">
+                                                <img src="~/@product.MainImageAddress" class="img-fluid" alt="@product.picturesAlternativeText" width="300" height="300">
+                                                @if (!product.IsAvailable)
+                                                {
+                                                    <span class="ribbon out-of-stock ">
+                                                        اتمام موجودی
+                                                    </span>
+                                                }
+                                            </a>
+                                            <div class="product-actions">
+                                                <a asp-area="/Main" asp-controller="UserProduct" asp-action="ProductDetail" asp-route-productId="@product.id" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">مشاهده جزئیات</span></a>
+                                                <a href="product-details.html"><i class="p-icon icon-bag2"></i> <span class="tool-tip">افزودن به سبد خرید</span></a>
+                                                <a href="wishlist.html"><i class="p-icon icon-heart"></i> <span class="tool-tip">افزودن به علاقه مندی ها</span></a>
+                                            </div>
+                                        </div>
+                                        <div class="product-content">
+                                            <h6 class="prodect-title"><a href="product-details.html">@product.Name</a></h6>
+                                            <div class="prodect-price">
+                                                <span class="new-price">@product.Price تومان:</span>
+                                            </div>
+                                        </div>
+                                    </div><!-- Single Product Item End -->
+                        </div>
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+</body>
+@section Scripts{
+<script src="~/js/ApplicationScripts.js"></script>
+<script src="~/js/main.js"></script>
+
+}

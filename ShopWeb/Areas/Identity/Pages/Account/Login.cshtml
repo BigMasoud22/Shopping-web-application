@@ -1,0 +1,108 @@
+﻿@page
+@model LoginModel
+@{
+    var returnUrl = Request.Query["returnUrl"];
+    var loginUrl = Url.Page("/Login", new { returnUrl = returnUrl });
+}
+<div id="main-wrapper">
+    <div class="site-wrapper-reveal border-bottom">
+
+        <div class="my-account-page-warpper section-space--ptb_120">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-7 m-auto">
+                        <div class="myaccount-box-wrapper">
+                            <div class="helendo-tabs">
+                                <ul class="nav" role="tablist">
+                                    <li class="tab__item nav-item active">
+                                        <a class="nav-link " data-bs-toggle="tab" href="#tab_list_06" role="tab">ورود</a>
+                                    </li>
+                                    <li class="tab__item nav-item">
+                                        <a class="nav-link active" data-bs-toggle="tab" href="#tab_list_07" role="tab">ثبت نام</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <div class="tab-content">
+                                <div class="tab-pane fade " id="tab_list_06" role="tabpanel">
+                                    <form method="post" class="account-form-box">
+                                        <h6>وارد حساب خود شوید.</h6>
+                                        <div style="padding-top:10px;" class="form-group">
+                                            <input asp-for=Input.Username type="text" class="form-control" id="InputUsername" aria-describedby="usernameHelp" placeholder="نام کاربری خود را وارد کنید">
+                                        </div>
+                                        <div style="padding-top:10px;" class="form-group">
+                                            <input asp-for=Input.Password type="password" class="form-control" id="InputPassword1" placeholder="گذرواژه">
+                                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                        </div>
+                                        <input type="hidden" asp-for="Input.IsLogin" value="true" />
+                                        <div class="button-box mt-25">
+                                            <button type="submit" class="btn btn--full" style="background-color:black;color:white;">ورود</button>
+                                        </div>
+                                        @* <div class="form-check" style="padding-top:10px;">
+                                            <label asp-for="Input.RememberMe" class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" asp-for="Input.RememberMe" />
+                                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                            </label>
+                                            </div>*@
+                                        <div class=mt-10>
+                                            <a asp-area=Identity asp-page="ForgotPassword">رمز خود را فراموش کرده اید؟</a>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="tab-pane fade show active" id="tab_list_07" role="tabpanel">
+                                    <form method="post" class="account-form-box">
+                                        <div asp-validation-summary="All" class="text-danger"></div>
+                                        <h6>یک حساب کاربری ایجاد نمایید.</h6>
+                                        <div class="input-group">
+                                            <input asp-for=Input.Username type="text" class="form-control" placeholder="نام کاربری" aria-label="Username">
+                                        </div>
+                                        <div style="padding-top:10px;" class="input-group">
+                                            <input asp-for=Input.FullName type="text" class="form-control" placeholder="نام و نام خانوادگی">
+                                        </div>
+                                        <div style="padding-top:10px;" class="form-group">
+                                            <input asp-for=Input.Email type="email" class="form-control" id="InputEmail1" aria-describedby="emailHelp" placeholder="ایمیل خود را وارد کنید">
+                                        </div>
+                                        <div style="padding-top:10px;" class="form-group">
+                                            <input asp-for=Input.Password type="password" class="form-control" id="InputPassword1" placeholder="گذرواژه">
+                                        </div>
+                                        <div style="padding-top:10px;" class="form-gruop">
+                                            <input asp-for="Input.ConfirmPassword" type="password" class="form-control" id="InputConfirmPassword" placeholder="تکرار گذرواژه">
+                                        </div>
+                                        <input type="hidden" asp-for="Input.IsLogin" value="false" />
+                                        <button type="submit" class="btn btn--full" style="background-color:black;color:white; margin-top:10px;">ثبت نام</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6 col-md-offset-2">
+    <section>
+        @{
+            if ((Model.ExternalLogins?.Count ?? 0) == 0)
+            {
+            }
+            else
+            {
+                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                    <div>
+                        <p>
+                            @foreach (var provider in Model.ExternalLogins!)
+                            {
+                                <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                            }
+                        </p>
+                    </div>
+                </form>
+            }
+        }
+    </section>
+</div>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+    }

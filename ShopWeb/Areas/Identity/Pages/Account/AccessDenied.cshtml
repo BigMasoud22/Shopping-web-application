@@ -1,0 +1,23 @@
+﻿@page
+@model AccessDeniedModel
+@{
+    ViewData["Title"] = "Access denied";
+}
+
+<div id="main-wrapper">
+    <div class="site-wrapper-reveal border-bottom">
+        <div class="error-page-area section-space--ptb_90">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 m-auto">
+                        <div class="error-page-content text-center section-space--ptb_90">
+                            <i class="icon icon-confused"></i>
+                            <h1 class="mb-20">اوه! شما به این صحفه دسترسی ندارید.</h1>
+                            <p class="description">دسترسی شما به این صفحه محدود شده است.<a asp-area="/Main" asp-controller="Home" asp-action="Index">صفحه اصلی</a> بروید.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
